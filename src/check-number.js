@@ -64,8 +64,18 @@ async function main() {
     }
 
     const numbersToCheck = [];
-    const results = [];  // Store all results here
-    const headers = ["ExternalId2", "Phone", "EmailAddress", "WhatsApp", "Email", "Bounce", "Click", "OpenClick", "on_whatsapp"];
+    const results = [];
+    const jsonOutputFile = args.out.replace(/\.(csv|xlsx)$/, '') + '-responses.json';
+    
+    // Initialize empty JSON file
+    fs.writeFileSync(jsonOutputFile, JSON.stringify([], null, 2));
+
+    const headers = [
+        "Country", "Locale", "ExternalId2", "FullName", "FirstName", "MiddleName", 
+        "LastName", "Phone", "WhatsappConsentStatus", "Email", "EmailConsentStatus", 
+        "Persona", "Specialty", "Workplace", "City", "State", "Region", "Brick", 
+        "Segment", "on_whatsapp", "is_valid"
+    ];
 
     // Read Excel file
     const workbook = XLSX.readFile(args.in);
@@ -74,13 +84,10 @@ async function main() {
 
     // Process Excel data
     data.forEach(row => {
-        if (!row.Phone) return;
-        const phoneWithPrefix = row.Phone.toString().startsWith('+') ? 
-            row.Phone.toString() : 
-            '+' + row.Phone.toString();
-            
         numbersToCheck.push({
-            phoneNumber: phoneWithPrefix,
+            phoneNumber: row.Phone ? (row.Phone.toString().startsWith('+') ? 
+                row.Phone.toString() : 
+                '+' + row.Phone.toString()) : null,
             rowData: row
         });
     });
@@ -89,12 +96,20 @@ async function main() {
         console.log('Excel file successfully processed. Will check numbers now');
 
         for (const index in numbersToCheck) {
-            await verifyNumber(numbersToCheck[index], results);
+            const numberData = numbersToCheck[index];
+            
+            if (!numberData.phoneNumber) {
+                // Add row to results without API check if phone is empty
+                results.push({
+                    ...numberData.rowData,
+                    on_whatsapp: false,
+                    is_valid: false
+                });
+                continue;
+            }
 
-            //
-            // we wait 5 seconds to respect the API limits or the request will fail
-            //
-            await sleep(5000);
+            await verifyNumber(numberData, results, jsonOutputFile);
+            await sleep(1000);
         }
 
         // Create Excel file after all numbers are checked
@@ -113,7 +128,7 @@ async function main() {
     }
 }
 
-async function verifyNumber(numberData, results) {
+async function verifyNumber(numberData, results, jsonOutputFile) {
     console.log(`Trying to verify number=[${numberData.phoneNumber}] using source=[${args.number}]`);
 
     var config = {
@@ -128,11 +143,23 @@ async function verifyNumber(numberData, results) {
     try {
         const response = await axios(config);
         const result = response.data;
-        console.log(`${numberData.phoneNumber}:`, result);
+        
+        // Append response to JSON file
+        const responseObject = {
+            phone: numberData.phoneNumber,
+            response: result,
+            timestamp: new Date().toISOString()
+        };
+
+        // Read current contents, append new response, and write back
+        const currentResponses = JSON.parse(fs.readFileSync(jsonOutputFile, 'utf8'));
+        currentResponses.push(responseObject);
+        fs.writeFileSync(jsonOutputFile, JSON.stringify(currentResponses, null, 2));
         
         results.push({
             ...numberData.rowData,
-            on_whatsapp: result?.on_whatsapp
+            on_whatsapp: result?.on_whatsapp ?? false,
+            is_valid: result?.is_valid ?? false
         });
     } catch (error) {
         try {
