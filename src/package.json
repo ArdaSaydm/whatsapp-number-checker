@@ -7,6 +7,7 @@
         "csv-parser": "^3.0.0",
         "csv-write-stream": "^2.0.0",
         "dotenv": "^16.3.1",
+        "xlsx": "^0.18.5",
         "yargs": "^17.7.2"
     }
 }
