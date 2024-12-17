@@ -1,0 +1,9 @@
+phone_number,on_whatsapp,json_number_information,json_whatsapp_information
++17137157533,true,"{""iso_country_code"":""US"",""region"":""Texas"",""carrier"":"""",""timezone"":[""America/Chicago""],""e164_format"":""+17137157533""}","{""number_id"":""17137157533""}"
++525511223344,false,"{""iso_country_code"":""MX"",""region"":""Mexico City, FD"",""carrier"":"""",""timezone"":[""America/Mexico_City""],""e164_format"":""+525511223344""}",{}
++31206490787,true,"{""iso_country_code"":""NL"",""region"":""Amsterdam"",""carrier"":"""",""timezone"":[""Europe/Amsterdam""],""e164_format"":""+31206490787""}","{""number_id"":""31206490787""}"
++905536677493,true,"{""iso_country_code"":""TR"",""region"":""Turkey"",""carrier"":""Turk Telekom"",""timezone"":[""Europe/Istanbul""],""e164_format"":""+905536677493""}","{""number_id"":""905536677493""}"
++17137157533,true
++525511223344,false
++31206490787,true
++905536677493,true

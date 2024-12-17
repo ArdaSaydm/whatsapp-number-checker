@@ -68,7 +68,7 @@ async function main() {
     let outputWriter        = null;
 
     if (!fs.existsSync(args.out)) {
-        outputWriter = csvWriter({ headers: ["phone_number", "on_whatsapp", "json_number_information", "json_whatsapp_information"]});
+        outputWriter = csvWriter({ headers: ["phone_number", "on_whatsapp"]});
     }
     else {
         outputWriter = csvWriter({sendHeaders: false});
@@ -135,8 +135,6 @@ function verifyNumberAndSave(numberToVerify, csvWriter) {
                 csvWriter.write({
                     phone_number: numberToVerify,
                     on_whatsapp: result?.on_whatsapp,
-                    json_number_information: JSON.stringify(result?.number),
-                    json_whatsapp_information: JSON.stringify(result?.whatsapp_info),
                 });
             }
             catch (e) {
