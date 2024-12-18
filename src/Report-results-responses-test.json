@@ -1,0 +1,62 @@
+[
+  {
+    "phone": "+905346698324",
+    "response": {
+      "is_valid": true,
+      "number": {
+        "iso_country_code": "TR",
+        "region": "Turkey",
+        "carrier": "Turkcell",
+        "timezone": [
+          "Europe/Istanbul"
+        ],
+        "e164_format": "+905346698324"
+      },
+      "on_whatsapp": true,
+      "whatsapp_info": {
+        "number_id": "905346698324"
+      }
+    },
+    "timestamp": "2024-12-17T14:57:45.282Z"
+  },
+  {
+    "phone": "+905065308619",
+    "response": {
+      "is_valid": true,
+      "number": {
+        "iso_country_code": "TR",
+        "region": "Turkey",
+        "carrier": "Turk Telekom",
+        "timezone": [
+          "Europe/Istanbul"
+        ],
+        "e164_format": "+905065308619"
+      },
+      "on_whatsapp": true,
+      "whatsapp_info": {
+        "number_id": "905065308619"
+      }
+    },
+    "timestamp": "2024-12-17T14:58:01.354Z"
+  },
+  {
+    "phone": "+905063514812",
+    "response": {
+      "is_valid": true,
+      "number": {
+        "iso_country_code": "TR",
+        "region": "Turkey",
+        "carrier": "Turk Telekom",
+        "timezone": [
+          "Europe/Istanbul"
+        ],
+        "e164_format": "+905063514812"
+      },
+      "on_whatsapp": true,
+      "whatsapp_info": {
+        "number_id": "905063514812"
+      }
+    },
+    "timestamp": "2024-12-17T14:58:04.221Z"
+  }
+]
