@@ -72,7 +72,7 @@ async function main() {
         if (!result && phoneNumber) {
             console.log(`Checking missing number: ${phoneNumber}`);
             result = await verifyNumber(phoneNumber, sourceNumber);
-            await sleep(1000);
+            // await sleep(1000);
             is_not_found = true;
         }
 
